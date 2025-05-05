@@ -1,0 +1,3 @@
+.direnv/
+nixpkgs-latest/
+maintained_packages.json
