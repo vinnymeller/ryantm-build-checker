@@ -10,10 +10,14 @@ if [[ -z "${NIXPKGS_SRC_PATH}" ]]; then
 	exit 1
 fi
 
+EXTRA_PACKAGE_SETS=${EXTRA_PACKAGE_SETS:-""}
+
 echo "Finding packages maintained by ${MAINTAINER_HANDLE}..."
+
 nix-instantiate --eval --json --strict \
 	--arg nixpkgsPath "${NIXPKGS_SRC_PATH}" \
 	--argstr maintainer "${MAINTAINER_HANDLE}" \
+	--argstr extraPackageSets "${EXTRA_PACKAGE_SETS}" \
 	find_maintained.nix >maintained_packages.json
 
 if ! jq -e . maintained_packages.json >/dev/null; then

@@ -19,11 +19,13 @@ This project:
 2. Configure repository variables:
    - `MAINTAINER_HANDLE`: Your Nixpkgs maintainer handle (required)
    - `IGNORE_PKGS`: Comma-separated list of packages to ignore (optional)
+   - `EXTRA_PACKAGE_SETS`: Comma-separated list of additional package sets to search in (optional)
 
 Example:
 ```
 MAINTAINER_HANDLE: vinnymeller
 IGNORE_PKGS: ltex-ls,jetbrains-mono
+EXTRA_PACKAGE_SETS: haskellPackages,nodePackages,python312Packages
 ```
 
 3. The workflow runs daily at 8:00 UTC by default, or you can trigger it manually

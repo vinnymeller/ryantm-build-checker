@@ -1,16 +1,15 @@
 {
   maintainer ? builtins.abort "maintainer argument is required",
   nixpkgsPath ? builtins.abort "nixpkgsPath argument is required",
+  extraPackageSets ? "",
 }:
 let
   pkgs = import nixpkgsPath { };
   lib = pkgs.lib;
   maintainerHandle = maintainer;
   maxDepth = 3;
-  packageSetNamesToRecurseInto = [
-    "python312Packages"
-  ];
-  shouldRecurse = name: lib.any (setName: setName == name) packageSetNamesToRecurseInto;
+  packageSets = if extraPackageSets == "" then [ ] else lib.strings.splitString "," extraPackageSets;
+  shouldRecurse = name: lib.any (setName: setName == name) packageSets;
   targetMaintainer =
     lib.maintainers.${maintainerHandle}
       or (throw "Maintainer handle '${maintainerHandle}' not found in nixpkgs/maintainers/maintainer-list.nix");
