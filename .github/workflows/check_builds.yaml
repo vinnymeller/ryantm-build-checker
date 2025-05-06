@@ -30,8 +30,10 @@ jobs:
             --keep MAINTAINER_HANDLE \
             --keep NIXPKGS_SRC_PATH \
             --keep GH_TOKEN \
+            --keep IGNORE_PKGS \
             --command bash run_checks.sh
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MAINTAINER_HANDLE: ${{ secrets.MAINTAINER_HANDLE }}
+          MAINTAINER_HANDLE: ${{ vars.MAINTAINER_HANDLE }}
+          IGNORE_PKGS: ${{ vars.IGNORE_PKGS }}
           NIXPKGS_SRC_PATH: ./nixpkgs-latest

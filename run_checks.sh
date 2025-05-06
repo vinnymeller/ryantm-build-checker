@@ -27,6 +27,17 @@ jq -r '.[]' maintained_packages.json
 
 jq -r '.[]' maintained_packages.json | while IFS= read -r pkg_name; do
 	echo "--- Checking package: ${pkg_name} ---"
+
+	if [[ -n "${IGNORE_PKGS}" ]]; then
+		IFS=',' read -ra IGNORE_ARRAY <<<"$IGNORE_PKGS"
+		for ignore_pkg in "${IGNORE_ARRAY[@]}"; do
+			if [[ "$pkg_name" == "$ignore_pkg" ]]; then
+				echo "Package ${pkg_name} is in IGNORE_PKGS list, skipping."
+				continue 2
+			fi
+		done
+	fi
+
 	python check_log.py "$pkg_name"
 	exit_code=$?
 	issue_title=""
