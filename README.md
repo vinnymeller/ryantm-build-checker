@@ -8,18 +8,19 @@ A GitHub workflow that monitors the build status of packages you maintain in nix
 
 This project:
 1. Identifies all packages maintained by a specific maintainer handle
-2. Checks the r-ryantm logs for each package
-3. Creates GitHub issues when:
+   - **Note**: only top-level packages are checked by default, i.e. pkgs.<package>, not pkgs.<namespace>.<package>. Setting the `EXTRA_PACKAGE_SETS` repository variable will enable checking specific namespaces as needed. 
+3. Checks the r-ryantm logs for each package
+4. Creates GitHub issues when:
    - Build failures are detected
    - Log pages are missing (possibly indicating a missing or misconfigured update script)
 
 ## Setup
 
-1. Fork this repository or copy it to your own account
-2. Configure repository variables:
+1. Fork this repository or copy the files to your own account
+2. Configure the following repository variables (Settings -> Secrets and variables -> Actions -> Variables -> New repository variable):
    - `MAINTAINER_HANDLE`: Your Nixpkgs maintainer handle (required)
    - `IGNORE_PKGS`: Comma-separated list of packages to ignore (optional)
-   - `EXTRA_PACKAGE_SETS`: Comma-separated list of additional package sets to search in (optional)
+   - `EXTRA_PACKAGE_SETS`: Comma-separated list of additional package sets to search in  (optional)
 
 Example:
 ```
